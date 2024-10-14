@@ -1,0 +1,89 @@
+### spring config
+spring:
+  ## 내장 웹서버 사용 설정
+  main:
+    web-application-type: none
+  ## task scheduling info
+  task:
+    scheduling:
+      pool-size: '5'
+      thread-name-prefix: wsvms-scheduler-
+
+### common api server config
+common:
+  api:
+    bulk:
+      protocol: http
+      host: localhost
+      port: 10300
+      url: ${common.api.bulk.protocol}://${common.api.bulk.host}:${common.api.bulk.port}/air/bulk
+    ba-dda:
+      protocol: http
+      host: localhost
+      port: 10900
+      url: ${common.api.ba-dda.protocol}://${common.api.ba-dda.host}:${common.api.ba-dda.port}/sys
+    widget:
+      protocol: http
+      host: localhost
+      port: 11420
+      url: ${common.api.widget.protocol}://${common.api.widget.host}:${common.api.widget.port}/widget/events/regist
+
+### widget event config
+## event_id = clientCd-siteCd-{zncd}{themecd}{unitsvccd}{gbcd}{evetcd}
+## ex) ESE-10000001-000EAS001E04
+widget:
+  api:
+    ## 클라이언트 코드
+    client-cd: ESE
+    ## 사이트 코드
+    site-cd: 10000001
+    evet-gb-cd: E
+    outb-main-gb: P
+    stat-evet-cd: 01
+    ## 이벤트 발생 문구 -2
+    stat-evet-cntn: 'CCTV : {param}'
+    ## 이벤트 발생 문구 - 1
+    stat-evet-nm: 경계감시 거수자침입
+    ## 이벤트 등급
+    stat-evet-gd-cd: 90
+    ## 서비스 테마 코드
+    svc-theme-cd: BDS
+    ## 단위 서비스 코드
+    unit-svc-cd: 101
+    ## 좌표 경도
+    x-coordinate: 127.1125937
+    ## 좌표 위도
+    y-coordinate: 37.444897
+    z-coordinate: 0
+    zn-cd: 000
+    ## 이벤트 발생 지역
+    outb-plac: 테스트 비행단
+
+
+##################################################################
+
+
+### svms server config
+svms:
+  websocket:
+    protocol: ws
+    host: localhost
+    port: 8089
+    url: ${svms.websocket.protocol}://${svms.websocket.host}:${svms.websocket.port}
+  server:
+    protocol: http
+    host: localhost
+    port: 8088
+    url: ${svms.server.protocol}://${svms.server.host}:${svms.server.port}/api/v1/cameras
+## svms devices name exceptions list(,)
+  exceptions:
+    equals: NMS,F-CA1,121-CA6(FR
+    prefix: 웅천,군사경찰_동편15_1,홍성
+    contains:
+
+### geoserver config
+geoserver:
+  server:
+    protocol: http
+    host: localhost
+    url: ${geoserver.server.protocol}://${geoserver.server.host}/geoserver/rokaf/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=rokaf%3Aasset_cctv&maxFeatures=50&outputFormat=application%2Fjson
